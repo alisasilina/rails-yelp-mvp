@@ -1,0 +1,27 @@
+<div class='container'>
+  <h1><%= @restaurant.name %></h1>
+
+  <div class='details'>
+    <p>Address: <%= @restaurant.address %></p>
+    <p>Category: <%= @restaurant.category %></p>
+    <% @ratings = @restaurant.reviews.map(&:rating) %>
+
+    <% if @restaurant.reviews.empty? %>
+      <p><em>No reviews yet</em></p>
+    <% else %>
+      <p>Average rating: <%= (@ratings.sum / @ratings.length.to_f).round(2) %></p>
+      <p>Reviews: </p>
+      <ul>
+        <% @contents = @restaurant.reviews.map(&:content) %>
+        <% @contents.each do |content| %>
+          <li><%= content %></li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <%= link_to 'Add review', new_restaurant_review_path(@restaurant)  %>
+  </div>
+
+  <%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |
+  <%= link_to 'Back to list', restaurants_path %>
+</div>
